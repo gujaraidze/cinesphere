@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Home",
+    "watchlist": "Watchlist",
+    "search": "Search"
+  },
+  "home": {
+    "trending": "Trending This Week",
+    "popular": "Popular Movies",
+    "topRated": "Top Rated",
+    "nowPlaying": "Now Playing"
+  },
+  "detail": {
+    "overview": "Overview",
+    "cast": "Cast",
+    "similar": "Similar Movies",
+    "addWatchlist": "Add to Watchlist",
+    "removeWatchlist": "Remove from Watchlist",
+    "watchTrailer": "Watch Trailer",
+    "rating": "Rating",
+    "runtime": "Runtime",
+    "genre": "Genre",
+    "min": "min"
+  },
+  "watchlist": {
+    "title": "My Watchlist",
+    "empty": "Your watchlist is empty. Start adding movies!",
+    "remove": "Remove"
+  },
+  "search": {
+    "placeholder": "Search for movies...",
+    "results": "Results for",
+    "noResults": "No results found for",
+    "recent": "Recent Searches"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong.",
+    "notFound": "Page not found.",
+    "backHome": "Back to Home"
+  }
+}

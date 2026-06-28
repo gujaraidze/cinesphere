@@ -1,0 +1,134 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.search-page {
+  padding: 40px 48px 64px;
+  min-height: 60vh;
+
+  @include respond-to(md) { padding: 32px 20px 48px; }
+
+  // ── Header ────────────────────────────────────────────────
+  &__heading {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    margin-bottom: 28px;
+  }
+
+  // ── Search bar ────────────────────────────────────────────
+  &__bar {
+    position: relative;
+    margin-bottom: 40px;
+    max-width: 680px;
+
+    svg {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: $color-text-muted;
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 20px 16px 52px;
+      background: $bg-card;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: $radius-lg;
+      color: $color-text;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color $ease-fast;
+
+      &::placeholder { color: $color-text-muted; }
+      &:focus { border-color: $color-primary; }
+    }
+
+    &--clear {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $color-text-muted;
+      font-size: 18px;
+      transition: color $ease-fast;
+
+      &:hover { color: $color-text; }
+    }
+  }
+
+  // ── Recent searches ───────────────────────────────────────
+  &__recent {
+    margin-bottom: 40px;
+
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+  }
+
+  &__recent-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__recent-tag {
+    padding: 7px 16px;
+    background: $bg-card;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: $radius-pill;
+    font-size: 13px;
+    color: $color-text-muted;
+    transition: border-color $ease-fast, color $ease-fast;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-text;
+    }
+  }
+
+  // ── Results label ─────────────────────────────────────────
+  &__label {
+    font-size: 16px;
+    color: $color-text-muted;
+    margin-bottom: 24px;
+
+    span { color: $color-text; font-weight: 600; }
+  }
+
+  // ── Results grid ──────────────────────────────────────────
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 24px 16px;
+
+    @include respond-to(sm) {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px 12px;
+    }
+  }
+
+  // ── Empty / no-results ────────────────────────────────────
+  &__empty {
+    text-align: center;
+    padding: 60px 0;
+    color: $color-text-muted;
+
+    p { font-size: 16px; margin-top: 8px; }
+
+    svg {
+      width: 48px;
+      height: 48px;
+      opacity: 0.3;
+      margin: 0 auto 16px;
+    }
+  }
+}

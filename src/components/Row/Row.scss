@@ -1,0 +1,93 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.row {
+  padding: 0 48px;
+  margin-bottom: 48px;
+
+  @include respond-to(md) { padding: 0 20px; }
+
+  // ── Header ────────────────────────────────────────────────
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: clamp(18px, 2.5vw, 22px);
+    font-weight: 700;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__see-all {
+    font-size: 13px;
+    color: $color-primary;
+    font-weight: 500;
+    transition: opacity $ease-fast;
+
+    &:hover { opacity: 0.8; }
+  }
+
+  &__arrow {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text;
+    transition: background $ease-fast, border-color $ease-fast;
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    svg { width: 16px; height: 16px; }
+  }
+
+  // ── Scroll track ──────────────────────────────────────────
+  &__track {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;        // Firefox
+    -ms-overflow-style: none;     // IE
+
+    &::-webkit-scrollbar { display: none; }
+
+    @include respond-to(sm) { gap: 12px; }
+  }
+
+  // ── Skeleton cards ────────────────────────────────────────
+  &__skeleton {
+    flex-shrink: 0;
+    width: 160px;
+    aspect-ratio: 2 / 3;
+    border-radius: $radius-md;
+    background: linear-gradient(90deg, $bg-surface 25%, $bg-card 50%, $bg-surface 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+
+    @include respond-to(sm) { width: 130px; }
+  }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
