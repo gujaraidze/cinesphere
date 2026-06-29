@@ -1,6 +1,9 @@
 {
   "nav": {
     "home": "Home",
+    "movies": "Movies",
+    "shows": "TV Shows",
+    "upcoming": "Upcoming",
     "watchlist": "Watchlist",
     "search": "Search"
   },
@@ -8,7 +11,27 @@
     "trending": "Trending This Week",
     "popular": "Popular Movies",
     "topRated": "Top Rated",
-    "nowPlaying": "Now Playing"
+    "nowPlaying": "Now Playing",
+    "mostWatched": "Most Watched This Month",
+    "genres": "Explore Genres"
+  },
+  "movies": {
+    "title": "Movies",
+    "popular": "Popular Movies",
+    "topRated": "Top Rated Movies",
+    "nowPlaying": "Now Playing",
+    "upcoming": "Upcoming Movies"
+  },
+  "shows": {
+    "title": "TV Shows",
+    "popular": "Popular Shows",
+    "topRated": "Top Rated Shows",
+    "onAir": "Currently On Air",
+    "airingToday": "Airing Today"
+  },
+  "upcoming": {
+    "title": "Upcoming Movies",
+    "subtitle": "Coming soon to theaters"
   },
   "detail": {
     "overview": "Overview",

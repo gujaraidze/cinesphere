@@ -1,0 +1,343 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// Card dimensions per breakpoint
+$card-w-xl: 120px;
+$card-h-xl:  86px;
+$card-w-lg: 100px;
+$card-h-lg:  72px;
+$card-w-md:  84px;
+$card-h-md:  60px;
+$card-w-sm:  70px;
+$card-h-sm:  50px;
+
+$info-gap:     28px;   // space between action buttons and top of genre strip
+$strip-bottom: 28px;   // gap between strip and section bottom edge
+
+.genre-showcase {
+  position: relative;
+  width: 100%;
+  height: 78vh;
+  min-height: 540px;
+  max-height: 860px;
+  overflow: hidden;
+  background: $bg-body;
+
+  // Shrink the whole section (and therefore the background) at smaller screens
+  @include respond-to(lg) { height: 72vh; min-height: 480px; }
+  @include respond-to(md) { height: 64vh; min-height: 400px; }
+  @include respond-to(sm) { height: 56vh; min-height: 330px; }
+
+  // ── Background ─────────────────────────────────────────────
+  &__bg {
+    position: absolute;
+    inset: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      animation: gs-fade 0.45s ease;
+    }
+  }
+
+  &__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top,  #000 0%, rgba(0,0,0,0.82) 32%, rgba(0,0,0,0.12) 68%, rgba(0,0,0,0.44) 100%),
+      linear-gradient(to right, rgba(0,0,0,0.7) 0%, transparent 56%);
+  }
+
+  // ── Body — absolute coordinate system ──────────────────────
+  &__body {
+    position: absolute;
+    inset: 0;
+  }
+
+  // ── Section label — top-left ────────────────────────────────
+  &__head {
+    position: absolute;
+    top: 40px;
+    left: 52px;
+    right: 52px;
+
+    @include respond-to(lg) { top: 32px; left: 40px; right: 40px; }
+    @include respond-to(md) { top: 26px; left: 20px; right: 20px; }
+  }
+
+  &__section-title {
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  &__section-sub {
+    font-size: 12px;
+    color: $color-text-muted;
+  }
+
+  // ── Movie info — pinned above genre strip ───────────────────
+  // bottom = card height + gap between info and strip + strip's own bottom offset
+  &__info {
+    position: absolute;
+    bottom: $card-h-xl + $info-gap + $strip-bottom;
+    left: 52px;
+    max-width: 520px;
+    animation: gs-fade 0.38s ease;
+
+    @include respond-to(lg) {
+      bottom: $card-h-lg + $info-gap + 20px;
+      left: 40px;
+      max-width: 480px;
+    }
+    @include respond-to(md) {
+      bottom: $card-h-md + $info-gap + 14px;
+      left: 20px;
+      right: 20px;
+      max-width: 100%;
+    }
+    @include respond-to(sm) {
+      bottom: $card-h-sm + $info-gap + 10px;
+    }
+  }
+
+  &__year {
+    display: inline-block;
+    font-size: 12px;
+    color: $color-text-muted;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-size: clamp(22px, 3.5vw, 40px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.75);
+  }
+
+  &__overview {
+    font-size: 13px;
+    line-height: 1.68;
+    color: rgba(255,255,255,0.74);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 18px;
+    max-width: 440px;
+
+    @include respond-to(md) { display: none; }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    @include respond-to(sm) {
+      .gs-btn { padding: 8px 14px; font-size: 12px; }
+    }
+  }
+
+  // ── Genre strip ─────────────────────────────────────────────
+  &__strip-wrap {
+    position: absolute;
+    bottom: $strip-bottom;
+    left: 52px;
+    right: 52px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+
+    @include respond-to(lg) { left: 40px; right: 40px; bottom: 20px; }
+    @include respond-to(md) { left: 20px; right: 20px; gap: 8px; bottom: 14px; }
+    @include respond-to(sm) { bottom: 10px; }
+  }
+
+  &__strip {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar { display: none; }
+
+    @include respond-to(md) { gap: 6px; }
+  }
+
+  // ── Genre cards ─────────────────────────────────────────────
+  &__card {
+    flex-shrink: 0;
+    position: relative;
+    width: $card-w-xl;
+    height: $card-h-xl;
+    border-radius: 10px;
+    overflow: hidden;
+    background: $bg-surface;
+    border: 2px solid transparent;
+    transition: border-color $ease-fast, transform $ease-fast;
+    cursor: pointer;
+
+    &:hover { transform: translateY(-4px); }
+
+    &--active {
+      border-color: $color-primary;
+      transform: translateY(-4px);
+
+      .genre-showcase__card-name { color: #fff; font-weight: 700; }
+    }
+
+    @include respond-to(lg) { width: $card-w-lg; height: $card-h-lg; }
+    @include respond-to(md) { width: $card-w-md; height: $card-h-md; border-radius: 8px; }
+    @include respond-to(sm) { width: $card-w-sm; height: $card-h-sm; }
+  }
+
+  // Inner bg div — fills same area as overlay so they match perfectly
+  &__card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.22) 100%);
+  }
+
+  &__card-name {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.92);
+    text-shadow: 0 1px 5px rgba(0,0,0,0.9);
+    z-index: 1;
+
+    @include respond-to(md) { font-size: 10px; bottom: 6px; }
+    @include respond-to(sm) { font-size: 9px; bottom: 5px; }
+  }
+
+  // Pulsing arrow badge — signals second-click navigates to genre page
+  &__card-explore {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: $color-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    animation: gs-explore-pulse 2s ease-in-out infinite;
+
+    svg {
+      width: 10px;
+      height: 10px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    @include respond-to(sm) { width: 16px; height: 16px; top: 3px; right: 3px; svg { width: 8px; height: 8px; } }
+  }
+
+  // Glowing top stripe on the active card
+  &__card--active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $color-primary;
+    box-shadow: 0 0 10px 3px $color-primary;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  // ── Strip navigation arrows ─────────────────────────────────
+  &__strip-arrows {
+    display: flex;
+    gap: 7px;
+    flex-shrink: 0;
+
+    @include respond-to(sm) { gap: 5px; }
+  }
+
+  &__arrow {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: background $ease-fast, border-color $ease-fast;
+
+    &:hover { background: $color-primary; border-color: $color-primary; }
+
+    svg { width: 15px; height: 15px; }
+
+    @include respond-to(sm) {
+      width: 28px;
+      height: 28px;
+      svg { width: 13px; height: 13px; }
+    }
+  }
+}
+
+// ── Action buttons ────────────────────────────────────────────
+.gs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: $radius-pill;
+  transition: background $ease-fast, border-color $ease-fast;
+
+  svg { width: 14px; height: 14px; }
+
+  &--primary {
+    background: $color-primary;
+    color: #fff;
+    &:hover { background: $color-primary-hover; }
+  }
+
+  &--outline {
+    border: 1px solid rgba(255,255,255,0.38);
+    color: #fff;
+    &:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+  }
+}
+
+@keyframes gs-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes gs-explore-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(124, 58, 237, 0);
+    transform: scale(1.08);
+  }
+}

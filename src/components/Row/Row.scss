@@ -11,7 +11,6 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-bottom: 20px;
   }
 
@@ -20,43 +19,45 @@
     font-weight: 700;
   }
 
-  &__controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  // ── Track wrapper (holds arrows + scroll track) ────────────
+  &__track-wrap {
+    position: relative;
+
+    &:hover .row__arrow {
+      opacity: 1;
+    }
   }
 
-  &__see-all {
-    font-size: 13px;
-    color: $color-primary;
-    font-weight: 500;
-    transition: opacity $ease-fast;
-
-    &:hover { opacity: 0.8; }
-  }
-
+  // ── Side arrows ───────────────────────────────────────────
   &__arrow {
-    width: 34px;
-    height: 34px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0, 0, 0, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     display: flex;
     align-items: center;
     justify-content: center;
     color: $color-text;
-    transition: background $ease-fast, border-color $ease-fast;
+    opacity: 0;
+    transition: opacity $ease-fast, background $ease-fast, border-color $ease-fast;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+    &--prev { left: 8px; }
+    &--next { right: 8px; }
 
     &:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.4);
+      background: rgba(0, 0, 0, 0.96);
+      border-color: rgba(255, 255, 255, 0.48);
     }
 
-    &:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+    svg { width: 18px; height: 18px; }
 
-    svg { width: 16px; height: 16px; }
+    @include respond-to(md) { display: none; }
   }
 
   // ── Scroll track ──────────────────────────────────────────
@@ -65,8 +66,9 @@
     gap: 16px;
     overflow-x: auto;
     scroll-behavior: smooth;
-    scrollbar-width: none;        // Firefox
-    -ms-overflow-style: none;     // IE
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
 
     &::-webkit-scrollbar { display: none; }
 

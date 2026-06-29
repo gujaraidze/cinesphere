@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTranslation } from 'react-i18next';
@@ -32,18 +32,18 @@ function MoonIcon() {
 }
 
 function Navbar() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const { theme, toggleTheme }      = useTheme();
+  const [drawerOpen, setDrawerOpen]  = useState(false);
+  const { theme, toggleTheme }       = useTheme();
   const { language, changeLanguage } = useLanguage();
   const { t }                        = useTranslation();
-  const navigate                     = useNavigate();
 
   const closeDrawer = () => setDrawerOpen(false);
 
   const NAV_LINKS = [
-    { label: t('nav.home'),      to: '/' },
-    { label: t('nav.search'),    to: '/search' },
-    { label: t('nav.watchlist'), to: '/watchlist' },
+    { label: t('nav.home'),     to: '/' },
+    { label: t('nav.movies'),   to: '/movies' },
+    { label: t('nav.shows'),    to: '/shows' },
+    { label: t('nav.upcoming'), to: '/upcoming' },
   ];
 
   return (
@@ -62,22 +62,16 @@ function Navbar() {
         </ul>
 
         <div className="navbar__actions">
-          {/* Search */}
-          <button className="navbar__search-btn" onClick={() => { navigate('/search'); closeDrawer(); }} aria-label="Search">
+          {/* Search icon */}
+          <Link to="/search" className="navbar__search-btn" aria-label="Search">
             <SearchIcon />
-          </button>
+          </Link>
 
           {/* Language switcher */}
           <div className="navbar__lang">
-            <button
-              className={language === 'en' ? 'active' : ''}
-              onClick={() => changeLanguage('en')}
-            >EN</button>
+            <button className={language === 'en' ? 'active' : ''} onClick={() => changeLanguage('en')}>EN</button>
             <span className="navbar__lang-sep">|</span>
-            <button
-              className={language === 'ka' ? 'active' : ''}
-              onClick={() => changeLanguage('ka')}
-            >KA</button>
+            <button className={language === 'ka' ? 'active' : ''} onClick={() => changeLanguage('ka')}>KA</button>
           </div>
 
           {/* Theme toggle */}
@@ -85,7 +79,7 @@ function Navbar() {
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
           </button>
 
-          {/* Join / Watchlist pill */}
+          {/* Watchlist pill */}
           <Link to="/watchlist" className="navbar__join-btn" onClick={closeDrawer}>
             {t('nav.watchlist')}
           </Link>
@@ -107,6 +101,7 @@ function Navbar() {
         {NAV_LINKS.map(({ label, to }) => (
           <NavLink key={to} to={to} end={to === '/'} onClick={closeDrawer}>{label}</NavLink>
         ))}
+        <NavLink to="/search" onClick={closeDrawer}>{t('nav.search')}</NavLink>
         <div className="navbar__drawer-controls">
           <div className="navbar__lang">
             <button className={language === 'en' ? 'active' : ''} onClick={() => changeLanguage('en')}>EN</button>

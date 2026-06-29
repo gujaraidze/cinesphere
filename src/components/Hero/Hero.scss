@@ -136,12 +136,11 @@
   // ── Dots ──────────────────────────────────────────────────
   &__dots {
     position: absolute;
-    bottom: 32px;
-    left: 48px;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 8px;
-
-    @include respond-to(md) { left: 20px; }
   }
 
   &__dot {

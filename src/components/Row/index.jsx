@@ -21,7 +21,7 @@ function ChevronRight() {
 const SCROLL_AMOUNT = 600;
 const SKELETON_COUNT = 6;
 
-function Row({ title, movies = [], loading = false }) {
+function Row({ title, movies = [], loading = false, mediaType = 'movie' }) {
   const trackRef = useRef(null);
 
   const scroll = (dir) => {
@@ -34,24 +34,26 @@ function Row({ title, movies = [], loading = false }) {
     <section className="row">
       <div className="row__header">
         <h2 className="row__title">{title}</h2>
-        <div className="row__controls">
-          <button className="row__arrow" onClick={() => scroll(-1)} aria-label="Scroll left">
-            <ChevronLeft />
-          </button>
-          <button className="row__arrow" onClick={() => scroll(1)} aria-label="Scroll right">
-            <ChevronRight />
-          </button>
-        </div>
       </div>
 
-      <div className="row__track" ref={trackRef}>
-        {loading
-          ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-              <div key={i} className="row__skeleton" />
-            ))
-          : movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
+      <div className="row__track-wrap">
+        <button className="row__arrow row__arrow--prev" onClick={() => scroll(-1)} aria-label="Scroll left">
+          <ChevronLeft />
+        </button>
+
+        <div className="row__track" ref={trackRef}>
+          {loading
+            ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+                <div key={i} className="row__skeleton" />
+              ))
+            : movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} mediaType={mediaType} />
+              ))}
+        </div>
+
+        <button className="row__arrow row__arrow--next" onClick={() => scroll(1)} aria-label="Scroll right">
+          <ChevronRight />
+        </button>
       </div>
     </section>
   );

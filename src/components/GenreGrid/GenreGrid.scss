@@ -1,0 +1,44 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.genre-grid {
+  padding: 0 48px;
+  margin-bottom: 48px;
+
+  @include respond-to(md) { padding: 0 20px; }
+
+  &__title {
+    font-size: clamp(18px, 2.5vw, 22px);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+
+    @include respond-to(lg)  { grid-template-columns: repeat(4, 1fr); }
+    @include respond-to(md)  { grid-template-columns: repeat(3, 1fr); }
+    @include respond-to(sm)  { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 62px;
+    border-radius: $radius-md;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.2px;
+    transition: transform $ease-fast, box-shadow $ease-fast;
+
+    &:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+  }
+}

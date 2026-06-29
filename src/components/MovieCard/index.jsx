@@ -17,15 +17,17 @@ function StarIcon() {
   );
 }
 
-function MovieCard({ movie }) {
+function MovieCard({ movie, mediaType = 'movie' }) {
   const genres = getGenreNames(movie.genre_ids);
   const rating = movie.vote_average?.toFixed(1);
   const posterUrl = movie.poster_path
     ? `${IMAGE_BASE}${movie.poster_path}`
     : null;
 
+  const linkTo = mediaType === 'tv' ? `/tv/${movie.id}` : `/movie/${movie.id}`;
+
   return (
-    <Link to={`/movie/${movie.id}`} className="movie-card">
+    <Link to={linkTo} className="movie-card">
       <div className="movie-card__poster">
         {posterUrl ? (
           <img src={posterUrl} alt={movie.title ?? movie.name} loading="lazy" />

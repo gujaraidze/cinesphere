@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Modal from '../Modal';
-import { getMovieVideos } from '../../api/tmdb';
+import { getMovieVideos, getTVVideos } from '../../api/tmdb';
 
-function TrailerModal({ movieId, isOpen, onClose }) {
+function TrailerModal({ movieId, mediaType = 'movie', isOpen, onClose }) {
   const [trailerKey, setTrailerKey] = useState(null);
   const [loading, setLoading]       = useState(false);
 
@@ -12,7 +12,9 @@ function TrailerModal({ movieId, isOpen, onClose }) {
     setLoading(true);
     setTrailerKey(null);
 
-    getMovieVideos(movieId)
+    const fetchFn = mediaType === 'tv' ? getTVVideos : getMovieVideos;
+
+    fetchFn(movieId)
       .then(({ data }) => {
         const trailer = data.results?.find(
           (v) => v.site === 'YouTube' && v.type === 'Trailer' && v.official
@@ -25,9 +27,8 @@ function TrailerModal({ movieId, isOpen, onClose }) {
       })
       .catch(() => setTrailerKey(null))
       .finally(() => setLoading(false));
-  }, [isOpen, movieId]);
+  }, [isOpen, movieId, mediaType]);
 
-  // Stop the video when the modal closes
   const handleClose = () => {
     setTrailerKey(null);
     onClose();
