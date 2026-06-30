@@ -4,7 +4,7 @@ A movie & TV streaming-style web app built with React. Browse trending movies, w
 
 ## Live Demo
 
-[> Add your Netlify URL here after deployment](https://cinesphere-react-project.netlify.app/)
+[Netlify URL](https://cinesphere-react-project.netlify.app/)
 
 ## Features
 
